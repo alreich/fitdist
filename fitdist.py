@@ -2,7 +2,7 @@
 
 """fitdist: Find the continuous probability distribution that best fits a dataset
 
-.. moduleauthor:: Al Reich <Alfred.Reich@soteradefense.com>
+.. moduleauthor:: Al Reich (al.reich@gmail.com)
 
 """
 
