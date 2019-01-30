@@ -1,0 +1,365 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Fit Distribution Module/Script &#8212; fitdist 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to fitdist’s documentation!" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to fitdist’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">fitdist 0.1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="fit-distribution-module-script">
+<h1>Fit Distribution Module/Script<a class="headerlink" href="#fit-distribution-module-script" title="Permalink to this headline">¶</a></h1>
+<p>The <em>fitdist</em> module/script finds the probability distributions that
+best-fit a set of data. By default, eighteen common continuous
+distributions are examined for a best-fit.  Setting <em>dist=all</em>
+results in over 80 continuous distributions being examined.</p>
+<p>The Kolmogorov-Smirnov (KS) Goodness-of-Fit (GoF) test is used to
+determine whether a fit is suitable.  If the KS GoF statistic is
+larger than the input (or default) threshold, <em>fitpval</em>, the
+distribution passes, otherwise it fails.  For those distributions that
+pass the following is output: distribution name, list of MLE parameter
+estimates (in scipy.stat’s defined order), and the KS GoF p-value.</p>
+<p>A log file of distribution names, their MLE parameter estimates, the
+KS GoF statistic and p-value, and whether they pass or fail is always
+written out (see the logfile option).</p>
+<p>The following Python modules are required: numpy, scipy, matplotlib,
+pandas, statsmodels</p>
+<p>See
+<a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/tutorial/stats/continuous.html">http://docs.scipy.org/doc/scipy/reference/tutorial/stats/continuous.html</a>
+for information on the distributions supported by <em>fitdist</em>.</p>
+<div class="section" id="module-api">
+<h2>Module API<a class="headerlink" href="#module-api" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="fitdist.find_best_fit_distributions">
+<code class="descclassname">fitdist.</code><code class="descname">find_best_fit_distributions</code><span class="sig-paren">(</span><em>data</em>, <em>dist_names=('alpha'</em>, <em>'beta'</em>, <em>'cauchy'</em>, <em>'chi2'</em>, <em>'expon'</em>, <em>'exponweib'</em>, <em>'f'</em>, <em>'fatiguelife'</em>, <em>'genextreme'</em>, <em>'gamma'</em>, <em>'laplace'</em>, <em>'lognorm'</em>, <em>'norm'</em>, <em>'powerlognorm'</em>, <em>'powernorm'</em>, <em>'t'</em>, <em>'tukeylambda'</em>, <em>'uniform')</em>, <em>goodness_of_fit_pvalue=0.1</em>, <em>drop_dist_names=('erlang'</em>, <em>)</em>, <em>verbose_mode=False</em>, <em>logfilename='bestfitdist.log'</em>, <em>ignore_gof=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fitdist.html#find_best_fit_distributions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fitdist.find_best_fit_distributions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the probability distributions that best fit the given data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Inputs:</th><td class="field-body"><p class="first"><cite>data</cite>: The input data in the form of a list or array of floating point numbers.</p>
+<p><cite>dist_names</cite>: A list of distribution names as found in scipy.stats (defaults to <cite>common_cont_dist_names</cite>).</p>
+<p><cite>goodness_of_fit_pvalue</cite>: The p-value for passing the Kolmogorov-Smirnov GoF test (default is 0.10).</p>
+<p><cite>drop_dist_names</cite>: A list of distributions to leave off of considerations (module default is [“erlang”]).</p>
+<p><cite>verbose_mode</cite>: A boolean that controls whether verbose output will be used (default is False).</p>
+<p><cite>logfilename</cite>: The name of the logging file (default is “bestfitdist.log”).</p>
+<p><cite>ignore_gof</cite>: If True, the KS GoF test will be ignored and all results will be output (default is False).</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Outputs:</th><td class="field-body"><p class="first">A list of best-fit results, sorted on KS GoF p-value (“best” to “worst”), where each result
+is itself a list consisting of three things:</p>
+<blockquote>
+<div><ul class="simple">
+<li>distribution name (the string used in <cite>scipy.stats</cite>),</li>
+<li>tuple of MLE parameter estimates (location &amp; scale, resp., are the last two entries)</li>
+<li>p-value for the Kolmogorov-Smirnov goodness-of-fit test</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Distributions:</th><td class="field-body"><p class="first">The distributions used here are listed below.  Names in <strong>bold</strong> are members of <cite>common_cont_dist_names</cite>.</p>
+<p><strong>‘alpha’</strong>, ‘anglit’, ‘arcsine’, <strong>‘beta’</strong>, ‘betaprime’, ‘bradford’, ‘burr’, <strong>‘cauchy’</strong>, ‘chi’,
+<strong>‘chi2’</strong>, ‘cosine’, ‘dgamma’, ‘dweibull’, ‘erlang’, <strong>‘expon’</strong>, <strong>‘exponweib’</strong>, ‘exponpow’, <strong>‘f’</strong>,
+<strong>‘fatiguelife’</strong>, ‘fisk’, ‘foldcauchy’, ‘foldnorm’, ‘frechet_r’, ‘frechet_l’, ‘genlogistic’, ‘genpareto’,
+‘genexpon’, <strong>‘genextreme’</strong>, ‘gausshyper’, <strong>‘gamma’</strong>, ‘gengamma’, ‘genhalflogistic’, ‘gilbrat’,
+‘gompertz’, ‘gumbel_r’, ‘gumbel_l’, ‘halfcauchy’, ‘halflogistic’, ‘halfnorm’, ‘hypsecant’, ‘invgamma’,
+‘invgauss’, ‘invweibull’, ‘johnsonsb’, ‘johnsonsu’, ‘ksone’, ‘kstwobign’, <strong>‘laplace’</strong>, ‘logistic’,
+‘loggamma’, ‘loglaplace’, <strong>‘lognorm’</strong>, ‘lomax’, ‘maxwell’, ‘mielke’, ‘nakagami’, ‘ncx2’, ‘ncf’, ‘nct’,
+<strong>‘norm’</strong>, ‘pareto’, ‘pearson3’, ‘powerlaw’, <strong>‘powerlognorm’</strong>, <strong>‘powernorm’</strong>, ‘rdist’, ‘reciprocal’,
+‘rayleigh’, ‘rice’, ‘recipinvgauss’, ‘semicircular’, <strong>‘t’</strong>, ‘triang’, ‘truncexpon’, ‘truncnorm’,
+<strong>‘tukeylambda’</strong>, <strong>‘uniform’</strong>, ‘vonmises’, ‘wald’, ‘weibull_min’, ‘weibull_max’, ‘wrapcauchy’</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Misc:</th><td class="field-body"><p class="first last">Depending on the dataset, some distributions will encounter convergence issues during MLE fitting.
+Running <cite>fitdist</cite> with <cite>verbose_mode</cite> set to <strong>True</strong> will aid in finding which distributions have
+problems. On subsequent runs, the <cite>drop_dist_names</cite> option can be used to remove problem distributions
+from consideration. The ‘erlang’ distribution has been found to be problematic often, so it is dropped
+by default.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fitdist.make_fitted_pdf">
+<code class="descclassname">fitdist.</code><code class="descname">make_fitted_pdf</code><span class="sig-paren">(</span><em>distribution</em>, <em>parameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fitdist.html#make_fitted_pdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fitdist.make_fitted_pdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a scipy.stats distribution and its MLE parameters, return the
+corresponding probability density function (PDF).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Inputs:</th><td class="field-body"><p class="first"><cite>distribution</cite>: Either an <strong>instance</strong> of a scipy.stats continuous distribution
+or a <strong>string</strong> that corresponds to a scipy.stats distribution</p>
+<p><cite>parameters</cite>: A tuple of MLE parameters for the input distribution in the order
+defined by scipy.stats</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Outputs:</th><td class="field-body"><p class="first">A probability density function, f, such that f(x) –&gt; y, where x &amp; y are floating point values.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><div class="first last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fitdist</span> <span class="k">as</span> <span class="nn">fd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normal_pdf</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">make_fitted_pdf</span><span class="p">(</span><span class="s1">&#39;norm&#39;</span><span class="p">,(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normal_pdf</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">0.24197072451914337</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fitdist.make_fitted_cdf">
+<code class="descclassname">fitdist.</code><code class="descname">make_fitted_cdf</code><span class="sig-paren">(</span><em>distribution</em>, <em>parameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fitdist.html#make_fitted_cdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fitdist.make_fitted_cdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a scipy.stats distribution and its MLE parameters, return the
+corresponding cumulative distribution function (CDF).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Inputs:</th><td class="field-body"><p class="first"><cite>distribution</cite>: Either an <strong>instance</strong> of a scipy.stats continuous distribution
+or a <strong>string</strong> that corresponds to a scipy.stats distribution</p>
+<p><cite>parameters</cite>: A tuple of MLE parameters for the input distribution in the order
+defined by scipy.stats</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Outputs:</th><td class="field-body"><p class="first">An cumulative distribution function (CDF), F, such that F(x) –&gt; y, where x &amp; y are floating point values.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><div class="first last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fitdist</span> <span class="k">as</span> <span class="nn">fd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normal_cdf</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">make_fitted_cdf</span><span class="p">(</span><span class="s1">&#39;norm&#39;</span><span class="p">,(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normal_cdf</span><span class="p">(</span><span class="mf">1.645</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">0.95001509446087862</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fitdist.make_fitted_ppf">
+<code class="descclassname">fitdist.</code><code class="descname">make_fitted_ppf</code><span class="sig-paren">(</span><em>distribution</em>, <em>parameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fitdist.html#make_fitted_ppf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fitdist.make_fitted_ppf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a scipy.stats distribution and its MLE parameters, return the
+corresponding point percentage function (PPF) – inverse of the CDF.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Inputs:</th><td class="field-body"><p class="first"><cite>distribution</cite>: Either an <strong>instance</strong> of a scipy.stats continuous distribution
+or a <strong>string</strong> that corresponds to a scipy.stats distribution</p>
+<p><cite>parameters</cite>: A tuple of MLE parameters for the input distribution in the order
+defined by scipy.stats</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Outputs:</th><td class="field-body"><p class="first">An point percentage function (PPF), G, such that G(x) –&gt; y, where x &amp; y are floating point values.
+Note: The PPF is the inverse Cumulative Distribution Function (CDF)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><div class="first last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fitdist</span> <span class="k">as</span> <span class="nn">fd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normal_ppf</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">make_fitted_ppf</span><span class="p">(</span><span class="s1">&#39;norm&#39;</span><span class="p">,(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normal_ppf</span><span class="p">(</span><span class="mf">0.95</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">1.6448536269514722</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fitdist.best_fit_z_scores">
+<code class="descclassname">fitdist.</code><code class="descname">best_fit_z_scores</code><span class="sig-paren">(</span><em>best_fit_results</em>, <em>fitted_dist_p_value=0.05</em>, <em>onesided=True</em>, <em>upper_pvalue=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fitdist.html#best_fit_z_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fitdist.best_fit_z_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the output of <em>find_best_fit_distributions</em> and returns confidence intervals
+for each entry (i.e., distribution specification) in the results.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Inputs:</th><td class="field-body"><p class="first"><cite>best_fit_results</cite>: The list of results that is output by <em>find_best_fit_distributions</em></p>
+<p><cite>fitted_dist_p_value</cite>: A probability, p, where 1-p is the size of the
+confidence interval (default is 0.05, i.e., 95% confidence interval).</p>
+<p><cite>one_sided</cite>: If True, then the output z-scores will correspond to one-sided
+confidence intervals, otherwise the z-scores will correspond to two-sided
+confidence intervals (default is True, i.e., one-sided).</p>
+<p><cite>upper_pvalue</cite>: If True, then one-sided, <em>upper</em> confidence interval z-scores
+are returned, otherwise, a <em>lower</em> confidence interval z-score is returned
+(default is True).  Only takes effect when <em>one-sided</em> is True.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Outputs:</th><td class="field-body"><p class="first">A list of z-scores.  If one sided is True, the list will consist of floating
+point values, otherwise the list will consist of pairs (tuples) of floating
+point values, where the first float in each pair is the <em>lower z-score</em> and
+the second float is the <em>upper z-score</em>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">TBD</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fitdist.write_p_value_table">
+<code class="descclassname">fitdist.</code><code class="descname">write_p_value_table</code><span class="sig-paren">(</span><em>path_name=None</em>, <em>table_name='p_value_table.csv'</em>, <em>distribution='norm'</em>, <em>mle_parameter_list=(0.0</em>, <em>1.0)</em>, <em>probabilities=(0.5</em>, <em>0.75</em>, <em>0.9</em>, <em>0.95</em>, <em>0.975</em>, <em>0.995)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fitdist.html#write_p_value_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fitdist.write_p_value_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>For a given probability distribution, the function writes out a one/two-sided confidence interval table.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fitdist.output_results">
+<code class="descclassname">fitdist.</code><code class="descname">output_results</code><span class="sig-paren">(</span><em>fitdist_results</em>, <em>z_scores=None</em>, <em>onesided=True</em>, <em>upper_zscores=False</em>, <em>conf_int_size=0.95</em>, <em>delimiter='</em>, <em>'</em>, <em>noheader=False</em>, <em>verbose_mode=True</em>, <em>ignore_gof=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fitdist.html#output_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fitdist.output_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats the output of find_best_fit_distributions and resulting confidence intervals into CSV form.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Inputs:</th><td class="field-body"><p class="first"><cite>fitdist_results</cite>: The list of results that is output by <em>find_best_fit_distributions</em></p>
+<p><cite>z_scores</cite>: The list of results that is output by <em>best_fit_z_scores</em> (default is None).</p>
+<p><cite>one_sided</cite>: If True, then the output z-scores will correspond to one-sided
+confidence intervals, otherwise the z-scores will correspond to two-sided
+confidence intervals (default is True, i.e., one-sided).</p>
+<p><cite>fitted_dist_p_value</cite>: A probability, p, where 1-p is the size of the
+confidence interval (default is 0.05, i.e., 95% confidence interval).</p>
+<p><cite>upper_pvalue</cite>: If True, then one-sided, <em>upper</em> confidence interval z-scores
+are returned, otherwise, a <em>lower</em> confidence interval z-score is returned
+(default is True).  Only takes effect when <em>one-sided</em> is True.</p>
+<p><cite>upper_zscores</cite>: (default is False)</p>
+<p><cite>conf_int_size</cite>: (default is 0.95)</p>
+<p><cite>delimiter</cite>: (default is ‘,’)</p>
+<p><cite>noheader</cite>: (default is False)</p>
+<p><cite>verbose_mode</cite>: (default is True)</p>
+<p><cite>ignore_gof</cite>: (default is False)</p>
+<p><cite>fitted_dist_p_value</cite>: A probability, p, where 1-p is the size of the
+confidence interval (default is 0.05, i.e., 95% confidence interval).</p>
+<p><cite>one_sided</cite>: If True, then the output z-scores will correspond to one-sided
+confidence intervals, otherwise the z-scores will correspond to two-sided
+confidence intervals (default is True, i.e., one-sided).</p>
+<p><cite>upper_pvalue</cite>: If True, then one-sided, <em>upper</em> confidence interval z-scores
+are returned, otherwise, a <em>lower</em> confidence interval z-score is returned
+(default is True).  Only takes effect when <em>one-sided</em> is True.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Outputs:</th><td class="field-body"><p class="first">A list of z-scores.  If one sided is True, the list will consist of floating
+point values, otherwise the list will consist of pairs (tuples) of floating
+point values, where the first float in each pair is the <em>lower z-score</em> and
+the second float is the <em>upper z-score</em>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">TBD</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="script-usage">
+<h2>Script Usage<a class="headerlink" href="#script-usage" title="Permalink to this headline">¶</a></h2>
+<p>For help on using <em>fitdist</em> as a script, enter <strong>python fitdist.py
+–help</strong> in a terminal window , as shown below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">prompt</span><span class="o">&gt;</span> <span class="n">python</span> <span class="n">fitdist</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">help</span>
+<span class="n">usage</span><span class="p">:</span> <span class="n">fitdist</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">verbose</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dist</span> <span class="p">{</span><span class="nb">all</span><span class="p">,</span><span class="n">common</span><span class="p">,</span><span class="n">custom</span><span class="p">}]</span>
+                  <span class="p">[</span><span class="o">--</span><span class="n">distlist</span> <span class="n">DISTLIST</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">drop</span> <span class="n">DROP</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">results</span> <span class="p">{</span><span class="nb">all</span><span class="p">,</span><span class="n">one</span><span class="p">}]</span>
+                  <span class="p">[</span><span class="o">--</span><span class="n">delimiter</span> <span class="n">DELIMITER</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">noheader</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">logfile</span> <span class="n">LOGFILE</span><span class="p">]</span>
+                  <span class="p">[</span><span class="o">--</span><span class="n">fitpval</span> <span class="n">FITPVAL</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">zscores</span> <span class="n">ZSCORES</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">upper</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">lower</span><span class="p">]</span>
+                  <span class="p">[</span><span class="n">infile</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Fit Distribution Module/Script</a><ul>
+<li><a class="reference internal" href="#module-api">Module API</a></li>
+<li><a class="reference internal" href="#script-usage">Script Usage</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to fitdist’s documentation!</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/fd_doc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to fitdist’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">fitdist 0.1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Al Reich.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>
