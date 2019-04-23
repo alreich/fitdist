@@ -346,6 +346,11 @@ def make_fitted_cdf(distribution, parameters):
     return cdf
 
 
+def read_numbers(filename):
+    with open(filename) as fn:
+        return [float(x) for x in fn]
+
+
 def best_fit_z_scores(best_fit_results, fitted_dist_p_value=0.05,
                       onesided=True, upper_pvalue=True):
     """Takes the output of *find_best_fit_distributions* and returns confidence intervals
