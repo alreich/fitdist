@@ -21,18 +21,22 @@ cont_dist_names = (
     'alpha',            # Alpha continuous random variable
     'anglit',           # Anglit continuous random variable
     'arcsine',          # Arcsine continuous random variable
+    'argus',            # Argus distribution
     'beta',             # Beta continuous random variable
     'betaprime',        # Beta prime continuous random variable
     'bradford',         # Bradford continuous random variable
     'burr',             # Burr continuous random variable
+    'burr12',	        # A Burr (Type XII) continuous random variable
     'cauchy',           # Cauchy continuous random variable
     'chi',              # Chi continuous random variable
     'chi2',             # Chi-squared continuous random variable
     'cosine',           # Cosine continuous random variable
+    'crystalball',	    # Crystalball distribution
     'dgamma',           # Double gamma continuous random variable
     'dweibull',         # Double Weibull continuous random variable
     #'erlang',           # Erlang continuous random variable -------------- Often causes problems (so removed)
     'expon',            # Exponential continuous random variable
+    'exponnorm',         # An exponentially modified Normal continuous random variable
     'exponweib',        # Exponentiated Weibull continuous random variable
     'exponpow',         # Exponential power continuous random variable
     'f',                # F continuous random variable
@@ -43,6 +47,7 @@ cont_dist_names = (
     'frechet_r',        # Frechet right (or Weibull minimum) continuous random variable
     'frechet_l',        # Frechet left (or Weibull maximum) continuous random variable
     'genlogistic',      # Generalized logistic continuous random variable
+    'gennorm',	        # A generalized normal continuous random variable
     'genpareto',        # Generalized Pareto continuous random variable
     'genexpon',         # Generalized exponential continuous random variable
     'genextreme',       # Generalized extreme value continuous random variable
@@ -57,15 +62,21 @@ cont_dist_names = (
     'halfcauchy',       # Half-Cauchy continuous random variable
     'halflogistic',     # Half-logistic continuous random variable
     'halfnorm',         # Half-normal continuous random variable
+    'halfgennorm',	    # The upper half of a generalized normal continuous random variable
     'hypsecant',        # Hyperbolic secant continuous random variable
     'invgamma',         # Inverted gamma continuous random variable
     'invgauss',         # Inverse Gaussian continuous random variable
     'invweibull',       # Inverted Weibull continuous random variable
     'johnsonsb',        # Johnson SB continuous random variable
     'johnsonsu',        # Johnson SU continuous random variable
+    'kappa4',	        # Kappa 4 parameter distribution
+    'kappa3',	        # Kappa 3 parameter distribution
     'ksone',            # General Kolmogorov-Smirnov one-sided test
     'kstwobign',        # Kolmogorov-Smirnov two-sided test for large N
     'laplace',          # Laplace continuous random variable
+    'levy',	            # A Levy continuous random variable
+    'levy_l',           # A left-skewed Levy continuous random variable
+    'levy_stable',      # A Levy-stable continuous random variable
     'logistic',         # Logistic (or Sech-squared) continuous random variable
     'loggamma',         # Log gamma continuous random variable
     'loglaplace',       # Log-Laplace continuous random variable
@@ -73,11 +84,13 @@ cont_dist_names = (
     'lomax',            # Lomax (Pareto of the second kind) continuous random variable
     'maxwell',          # Maxwell continuous random variable
     'mielke',           # Mielke's Beta-Kappa continuous random variable
+    'moyal',            # A Moyal continuous random variable
     'nakagami',         # Nakagami continuous random variable
     'ncx2',             # Non-central chi-squared continuous random variable
     'ncf',              # Non-central F distribution continuous random variable
     'nct',              # Non-central Student's T continuous random variable
     'norm',             # Normal continuous random variable
+    'norminvgauss',     # A Normal Inverse Gaussian continuous random variable
     'pareto',           # Pareto continuous random variable
     'pearson3',         # Pearson type III continuous random variable
     'powerlaw',         # Power-function continuous random variable
@@ -89,13 +102,16 @@ cont_dist_names = (
     'rice',             # Rice continuous random variable
     'recipinvgauss',    # Reciprocal inverse Gaussian continuous random variable
     'semicircular',     # Semicircular continuous random variable
+    'skewnorm',         # A skew-normal random variable
     't',                # Student's T continuous random variable
+    'trapz',            # A trapezoidal continuous random variable
     'triang',           # Triangular continuous random variable
     'truncexpon',       # Truncated exponential continuous random variable
     'truncnorm',        # Truncated normal continuous random variable
     'tukeylambda',      # Tukey-Lamdba continuous random variable
     'uniform',          # Uniform continuous random variable
     'vonmises',         # Von Mises continuous random variable
+    'vonmises_line',    # A Von Mises continuous random variable
     'wald',             # Wald continuous random variable
     'weibull_min',      # Frechet right (or Weibull minimum) continuous random variable
     'weibull_max',      # Frechet left (or Weibull maximum) continuous random variable
