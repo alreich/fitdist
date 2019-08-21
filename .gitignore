@@ -1,0 +1,5 @@
+.DS_Store
+.idea/workspace.xml
+.ipynb_checkpoints/*
+__pycache__/*
+bestfitdist.log
