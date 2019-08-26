@@ -14,7 +14,7 @@ import csv
 import numpy as np
 import pandas as pd
 import scipy.stats
-#import statsmodels.api as sm
+# import statsmodels.api as sm
 
 # Names of all continuous distributions in scipy.stats
 cont_dist_names = (
@@ -34,7 +34,7 @@ cont_dist_names = (
     'crystalball',	    # Crystalball distribution
     'dgamma',           # Double gamma continuous random variable
     'dweibull',         # Double Weibull continuous random variable
-    #'erlang',           # Erlang continuous random variable -------------- Often causes problems (so removed)
+    # 'erlang',           # Erlang continuous random variable -------------- Often causes problems (so removed)
     'expon',            # Exponential continuous random variable
     'exponnorm',         # An exponentially modified Normal continuous random variable
     'exponweib',        # Exponentiated Weibull continuous random variable
