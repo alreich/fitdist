@@ -1,5 +1,15 @@
+
 .DS_Store
-.idea/workspace.xml
+
+
+# PyCharm
+.idea/
+
+# Sphinx documentation
+docs/_build/
+
 .ipynb_checkpoints/*
+
 __pycache__/*
+
 bestfitdist.log
